@@ -97,6 +97,7 @@ type Plugin struct {
 
 // Exec runs the plugin
 func (p *Plugin) Exec() error {
+	log.Info("This is target initial: " + p.Target)
 	// normalize the target URL
 	p.Target = strings.TrimPrefix(p.Target, "/")
 
@@ -140,7 +141,7 @@ func (p *Plugin) Exec() error {
 		"region":   p.Region,
 		"endpoint": p.Endpoint,
 		"bucket":   p.Bucket,
-	}).Info("Attempting to upload")
+	}).Info("Attempting to upload hehehehehehehehehehehe")
 
 	matches, err := matches(p.Source, p.Exclude)
 	if err != nil {
@@ -156,7 +157,11 @@ func (p *Plugin) Exec() error {
 			continue
 		}
 
+		log.Info("This is target right now: " + p.Target)
+
 		target := resolveKey(p.Target, match, p.StripPrefix)
+
+		target = strings.ReplaceAll(target, "/assets", "")
 
 		contentType := matchExtension(match, p.ContentType)
 		contentEncoding := matchExtension(match, p.ContentEncoding)
@@ -175,7 +180,7 @@ func (p *Plugin) Exec() error {
 			"name":   match,
 			"bucket": p.Bucket,
 			"target": target,
-		}).Info("Uploading file")
+		}).Info("Uploading file hahahahahahah")
 
 		// when executing a dry-run we exit because we don't actually want to
 		// upload the file to S3.
