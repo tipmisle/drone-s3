@@ -77,7 +77,7 @@ func main() {
 		cli.StringFlag{
 			Name:   "target",
 			Usage:  "upload files to target folder",
-			EnvVar: "PLUGIN_TARGET",
+			EnvVar: "PLUGIN_TARGET,FULL_DIST_PATH",
 		},
 		cli.StringFlag{
 			Name:   "strip-prefix",
@@ -159,7 +159,7 @@ func run(c *cli.Context) error {
 		Region:                c.String("region"),
 		Access:                c.String("acl"),
 		Source:                c.String("source"),
-		Target:                c.String("target"),
+		Target:                getFirstNonEmptyEnvVar("PLUGIN_TARGET", "TARGET", "PLUGIN_FULL_DIST_PATH", "FULL_DIST_PATH"),
 		StripPrefix:           c.String("strip-prefix"),
 		Exclude:               c.StringSlice("exclude"),
 		Encryption:            c.String("encryption"),
@@ -173,4 +173,14 @@ func run(c *cli.Context) error {
 	}
 
 	return plugin.Exec()
+}
+
+func getFirstNonEmptyEnvVar(vars ...string) string {
+	for _, v := range vars {
+		value := os.Getenv(v)
+		if value != "" {
+			return value
+		}
+	}
+	return ""
 }
