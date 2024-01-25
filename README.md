@@ -12,6 +12,18 @@ Drone plugin to publish files and artifacts to Amazon S3 or Minio. For the
 usage information and a listing of the available options please take a look at
 [the docs](http://plugins.drone.io/drone-plugins/drone-s3/).
 
+### Build for me
+I had to create Dockerfile in root in order to build with:
+```
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -o release/linux/amd64/drone-s3
+docker build --rm=true -t tiiipmisle/custom-s3 .
+```
+
+### Push to dockerhub
+```
+docker push tiiipmisle/custom-s3
+```
+
 ## Build
 
 Build the binary with the following commands:

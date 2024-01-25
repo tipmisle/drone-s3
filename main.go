@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -146,46 +144,6 @@ func main() {
 }
 
 func run(c *cli.Context) error {
-	dirPaths := []string{"./"} // Replace with your actual directory paths
-
-	for _, dirPath := range dirPaths {
-		// Log the current directory name
-		log.Printf("Contents of directory: %s\n", dirPath)
-
-		// Read the directory contents
-		entries, err := os.ReadDir(dirPath)
-		if err != nil {
-			log.Fatalf("Failed to read the directory '%s': %v", dirPath, err)
-		}
-
-		// Loop through and log each entry
-		for _, entry := range entries {
-			log.Println(entry.Name())
-		}
-
-		// Optionally, add a separator between directory listings
-		log.Println("-----")
-	}
-
-	// Replace with the path to your file
-	filePath := "./mainenvfile"
-
-	// Open the file
-	file, err := os.Open(filePath)
-	if err != nil {
-		log.Fatalf("Failed to open file: %v", err)
-	}
-	defer file.Close()
-
-	// Read the file contents
-	contents, err := io.ReadAll(file)
-	if err != nil {
-		log.Fatalf("Failed to read file: %v", err)
-	}
-
-	// Output the contents to the console
-	fmt.Println(string(contents))
-
 	_ = godotenv.Load("./mainenvfile")
 
 	plugin := Plugin{
